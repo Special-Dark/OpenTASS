@@ -1,0 +1,9 @@
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.csproj.ResolveComReference.cache
+D:\SpecialDark\实例程序\windows\C#\bin\Release\MiniIMU.exe
+D:\SpecialDark\实例程序\windows\C#\bin\Release\MiniIMU.pdb
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.csprojResolveAssemblyReference.cache
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.Form1.resources
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.Properties.Resources.resources
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.csproj.GenerateResource.Cache
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.exe
+D:\SpecialDark\实例程序\windows\C#\obj\x86\Release\MiniIMU.pdb
