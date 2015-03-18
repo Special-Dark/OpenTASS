@@ -12,6 +12,7 @@
 #define BAUD 9600
 #define true 1
 #define false 0
+#define DEBUG  0 // still have bugs when set to 1
 #define G_scale 32768*16
 #define W_scale 32768*2000
 // #define G_scale 1
@@ -27,7 +28,7 @@ static short Wdata[3] = {0};
 short readSensorData();
 int openSerialPort(char *device, int baud);
 void decodeDataTo16Bit(short data);
-
+void watchData();
 int main() {
 
 	float G[3] = {0};
@@ -47,8 +48,12 @@ int main() {
 		W[1] = (float) Wdata[1] / W_scale;
 		W[2] = (float) Wdata[2] / W_scale;
 
-		printf("G = %.2f, %.2f, %.2f\n", G[0],G[1],G[2]);
-		printf("W = %.2f, %.2f, %.2f\n", W[0],W[1],W[2]);
+		printf("G = %.3f, %.3f, %.3f\n", G[0],G[1],G[2]);
+		printf("W = %.3f, %.3f, %.3f\n", W[0],W[1],W[2]);
+		
+		if (DEBUG == true) {
+			watchData();
+		}
 	}
 	return 0;
 }
@@ -88,5 +93,11 @@ void decodeDataTo16Bit(short data) {
 	}
 	
 
+}
+
+void watchData() {
+	char command[40];
+	sprintf(command, "echo G = %d, %d, %d  @@@  W = %d,%d,%d > data.txt",Gdata[0],Gdata[1],Gdata[2],Wdata[0],Wdata[1],Wdata[2]);
+	system(command);
 
 }
