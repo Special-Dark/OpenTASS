@@ -14,6 +14,8 @@
 #define false 0
 #define G_scale 32768*16
 #define W_scale 32768*2000
+// #define G_scale 1
+// #define W_scale 1
 
 static int dataFlow = 0;
 static short data8bit = 0;
@@ -26,12 +28,13 @@ short readSensorData();
 int openSerialPort(char *device, int baud);
 void decodeDataTo16Bit(short data);
 
-void main() {
+int main() {
 
-	short dataArry[11] = {0};
 	float G[3] = {0};
 	float W[3] = {0};
+
 	dataFlow = openSerialPort(DEVICE, BAUD);
+
 	while (true) {
 		//printf("data = %d\n", readSensorData());
 		decodeDataTo16Bit(readSensorData());
@@ -47,6 +50,7 @@ void main() {
 		printf("G = %.2f, %.2f, %.2f\n", G[0],G[1],G[2]);
 		printf("W = %.2f, %.2f, %.2f\n", W[0],W[1],W[2]);
 	}
+	return 0;
 }
 
 
@@ -70,14 +74,14 @@ void decodeDataTo16Bit(short data) {
 	} else {
 		switch (dataBuffer[1]) {
 			case 81:
-				Gdata[0] = (dataBuffer[3] << 8 | dataBuffer[2]);
-				Gdata[1] = (dataBuffer[5] << 8 | dataBuffer[4]);
-				Gdata[2] = (dataBuffer[7] << 8 | dataBuffer[6]);
+				Gdata[0] = ((unsigned short)dataBuffer[3] << 8 | dataBuffer[2]);
+				Gdata[1] = ((unsigned short)dataBuffer[5] << 8 | dataBuffer[4]);
+				Gdata[2] = ((unsigned short)dataBuffer[7] << 8 | dataBuffer[6]);
 				break;
 			case 82:
-				Wdata[0] = (dataBuffer[3] << 8 | dataBuffer[2]);
-				Wdata[1] = (dataBuffer[5] << 8 | dataBuffer[4]);
-				Wdata[2] = (dataBuffer[7] << 8 | dataBuffer[6]);
+				Wdata[0] = ((unsigned short)dataBuffer[3] << 8 | dataBuffer[2]);
+				Wdata[1] = ((unsigned short)dataBuffer[5] << 8 | dataBuffer[4]);
+				Wdata[2] = ((unsigned short)dataBuffer[7] << 8 | dataBuffer[6]);
 		 		break;
 		}
 		dataCount = 0;
