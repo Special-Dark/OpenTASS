@@ -1,0 +1,20 @@
+sample data decode from sensor, only include g/s and `/s two type data
+
+
+
+byte[]
+ 0  1  2  3  4  5  6  7  8  9 10     0  1  2  3  4  5  6  7  8  9 10
+
+55 51 f4 ff 50 00 ee ff b9 06 95    55 52 ff ff fe ff 01 00 b9 06 62   
+55 51 08 00 4b 00 f2 ff bd 06 ad    55 52 00 00 fd ff 01 00 bd 06 67
+55 51 00 00 47 00 03 00 c2 06 b8    55 52 ff ff fe ff 03 00 c2 06 6d
+55 51 f6 ff 53 00 e9 ff c7 06 a3    55 52 ff ff fe ff 02 00 c7 06 71
+55 51 fc ff 4e 00 eb ff b9 06 98    55 52 01 00 fe ff 04 00 b9 06 68
+55 51 fb ff 56 00 e4 ff bd 06 9c    55 52 01 00 ff ff 01 00 bd 06 6a
+55 51 03 00 54 00 ee ff b9 06 a9    55 52 00 00 00 00 02 00 b9 06 68
+55 51 03 00 47 00 ed ff b9 06 9b    55 52 fe ff fe ff 02 00 b9 06 62
+55 51 f1 ff 49 00 f0 ff c2 06 96    55 52 00 00 fe ff 02 00 c2 06 6e
+55 51 fc ff 5d 00 f0 ff bd 06 b0    55 52 ff ff fd ff 02 00 bd 06 66
+
+
+
