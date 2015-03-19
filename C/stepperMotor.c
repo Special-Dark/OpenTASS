@@ -31,9 +31,10 @@ void initalPins() {
 
 }
 
-void baseRunAnticlockwise(int delayus) {
+void baseRunAnticlockwise(int delayus, int beat) {
 
 //	while (true) {
+	if (beat == 8) {
 		digitalWrite(IN0, HIGH);
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN2, LOW);
@@ -81,13 +82,39 @@ void baseRunAnticlockwise(int delayus) {
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN3, LOW);
 		delayMicroseconds(delayus);
+	} else  {
 
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+		
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+		
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+	}
 //	}
 }
 
-void baseRunClockwise(int delayus) {
+void baseRunClockwise(int delayus, int beat) {
 
 //	while (true) {
+	if (beat == 8) {
 		digitalWrite(IN0, HIGH);
 		digitalWrite(IN1, LOW);
 		digitalWrite(IN2, LOW);
@@ -135,6 +162,33 @@ void baseRunClockwise(int delayus) {
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN3, HIGH);
 		delayMicroseconds(delayus);
+	} else {
+
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+		
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+		
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+
+	}
 //	}
 }
 
@@ -142,8 +196,10 @@ void baseRunClockwise(int delayus) {
 
 void main(int argc, char *argv[]) {
 	int delay = 0;
+	int beat = 8;
 	int direction = 0;
 	delay = atoi(argv[1]);
+	beat = atoi(argv[3]);
 	initalPins();
     if (strcmp(argv[2],"p")==0) {
 		direction = 0;
@@ -158,18 +214,22 @@ void main(int argc, char *argv[]) {
 		case 2:
 			while (true) {
 				for (count=0;count<=COUNT;count++) {
-					baseRunClockwise(delay);
+					baseRunClockwise(delay, beat);
 				}
 				for (count=COUNT;count>=0;count--) {
-					baseRunAnticlockwise(delay);
+					baseRunAnticlockwise(delay, beat);
 				}
 			}
 			break;
 		case 1:
-			baseRunAnticlockwise(delay);
+			while (true) {
+				baseRunAnticlockwise(delay, beat);
+			}
 			break;
 		case 0:
-			baseRunClockwise(delay);
+			while (true) {
+				baseRunClockwise(delay, beat);
+			}
 			break;
 		default:
 			return;
