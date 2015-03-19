@@ -12,7 +12,7 @@
 #include<string.h>
 
 #define DEVICE "/dev/ttyAMA0"
-#define BAUD 9600
+#define BAUD 115200
 #define true 1
 #define false 0
 #define DEBUG  "--debug"
@@ -34,6 +34,7 @@ short readSensorData();
 int openSerialPort(char *device, int baud);
 void decodeDataTo16Bit(short data);
 void showFakeGUI();
+
 void mainProcess() {
 	while (true) {
 		decodeDataTo16Bit(readSensorData());
@@ -62,11 +63,13 @@ void mainProcessWithDebug() {
 		showFakeGUI();
 	}
 }
+
 void signalHandler(int sig) {
 	printf("\033[?25h"); // set cursor show 
 	printf("\nexit!\n");
 	exit(0);
 }
+
 int main(int argc, char *argv[]) {
 	int mode = 0;
 
