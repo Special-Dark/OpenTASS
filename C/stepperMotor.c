@@ -8,6 +8,7 @@
 #include<stdio.h>
 #include<wiringPi.h>
 #include<stdlib.h>
+#include<string.h>
 
 #define true 1
 #define IN0 0
@@ -24,65 +25,135 @@ void initalPins() {
 	for (i=0;i<4;i++) {
 		pinMode(pins[i], OUTPUT);
 	}
+
 }
-void baseRun(int DELAY) {
 
-	digitalWrite(IN0, HIGH);
-	digitalWrite(IN1, LOW);
-	digitalWrite(IN2, LOW);
-	digitalWrite(IN3, LOW);
-		delayMicroseconds(DELAY);
+void baseRunAnticlockwise(int delayus) {
 
-	digitalWrite(IN0, HIGH);
-	digitalWrite(IN1, HIGH);
-	digitalWrite(IN2, LOW);
-	digitalWrite(IN3, LOW);
-		delayMicroseconds(DELAY);
+	while (true) {
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
 
-	digitalWrite(IN0, LOW);
-	digitalWrite(IN1, HIGH);
-	digitalWrite(IN2, LOW);
-	digitalWrite(IN3, LOW);
-		delayMicroseconds(DELAY);
-
-	digitalWrite(IN0, LOW);
-	digitalWrite(IN1, HIGH);
-	digitalWrite(IN2, HIGH);
-	digitalWrite(IN3, LOW);
-		delayMicroseconds(DELAY);
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
 	
-	digitalWrite(IN0, LOW);
-	digitalWrite(IN1, LOW);
-	digitalWrite(IN2, HIGH);
-	digitalWrite(IN3, LOW);
-		delayMicroseconds(DELAY);
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+	
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+		
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+	
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+	
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+	
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
 
-	digitalWrite(IN0, LOW);
-	digitalWrite(IN1, LOW);
-	digitalWrite(IN2, HIGH);
-	digitalWrite(IN3, HIGH);
-		delayMicroseconds(DELAY);
+	}
+}
 
-	digitalWrite(IN0, LOW);
-	digitalWrite(IN1, LOW);
-	digitalWrite(IN2, LOW);
-	digitalWrite(IN3, HIGH);
-		delayMicroseconds(DELAY);
+void baseRunClockwise(int delayus) {
+	while (true) {
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
 
-	digitalWrite(IN0, HIGH);
-	digitalWrite(IN1, LOW);
-	digitalWrite(IN2, LOW);
-	digitalWrite(IN3, HIGH);
-		delayMicroseconds(DELAY);
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
 
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+	
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		delayMicroseconds(delayus);
+
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+
+		digitalWrite(IN0, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+
+		digitalWrite(IN0, HIGH);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		delayMicroseconds(delayus);
+	}
 }
 void main(int argc, char *argv[]) {
 	int delay = 0;
+	int direction = 0;
 	delay = atoi(argv[1]);
 	initalPins();
+    if (strcmp(argv[2],"p")==0) {
+		direction = 1;
+	} else if (strcmp(argv[2],"n")==0) {
+		direction = 0;
+	} else
+		direction = 1;
 
-	while (1) {
-		baseRun(delay);
+	switch (direction) {
+		case 1:
+			baseRunClockwise(delay);
+			break;
+		case 0:
+			baseRunAnticlockwise(delay);
+			break;
+		default:
+			return;
 	}
 }
 
