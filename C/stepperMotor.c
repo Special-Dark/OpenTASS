@@ -15,6 +15,9 @@
 #define IN1 1
 #define IN2 2
 #define IN3 3
+#define COUNT 64
+
+static int  count = 0;
 
 void initalPins() {
 	int i = 0;
@@ -30,7 +33,7 @@ void initalPins() {
 
 void baseRunAnticlockwise(int delayus) {
 
-	while (true) {
+//	while (true) {
 		digitalWrite(IN0, HIGH);
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN2, LOW);
@@ -79,11 +82,12 @@ void baseRunAnticlockwise(int delayus) {
 		digitalWrite(IN3, LOW);
 		delayMicroseconds(delayus);
 
-	}
+//	}
 }
 
 void baseRunClockwise(int delayus) {
-	while (true) {
+
+//	while (true) {
 		digitalWrite(IN0, HIGH);
 		digitalWrite(IN1, LOW);
 		digitalWrite(IN2, LOW);
@@ -131,26 +135,41 @@ void baseRunClockwise(int delayus) {
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN3, HIGH);
 		delayMicroseconds(delayus);
-	}
+//	}
 }
+
+
+
 void main(int argc, char *argv[]) {
 	int delay = 0;
 	int direction = 0;
 	delay = atoi(argv[1]);
 	initalPins();
     if (strcmp(argv[2],"p")==0) {
-		direction = 1;
-	} else if (strcmp(argv[2],"n")==0) {
 		direction = 0;
-	} else
+	} else if (strcmp(argv[2],"n")==0) {
 		direction = 1;
+	} else if (strcmp(argv[2],"a")==0) {
+		direction = 2;
+	} else
+		direction = 0;
 
 	switch (direction) {
+		case 2:
+			while (true) {
+				for (count=0;count<=COUNT;count++) {
+					baseRunClockwise(delay);
+				}
+				for (count=COUNT;count>=0;count--) {
+					baseRunAnticlockwise(delay);
+				}
+			}
+			break;
 		case 1:
-			baseRunClockwise(delay);
+			baseRunAnticlockwise(delay);
 			break;
 		case 0:
-			baseRunAnticlockwise(delay);
+			baseRunClockwise(delay);
 			break;
 		default:
 			return;
