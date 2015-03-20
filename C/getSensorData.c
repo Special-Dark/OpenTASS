@@ -5,21 +5,8 @@
 	> Created Time: Tue 17 Mar 2015 11:00:41 UTC
  ************************************************************************/
 
-#include<stdlib.h>
-#include<stdio.h>
-#include<wiringSerial.h>
-#include<signal.h>
-#include<string.h>
 
-#define DEVICE "/dev/ttyAMA0"
-#define BAUD 115200
-#define true 1
-#define false 0
-#define DEBUG  "--debug"
-#define G_scale 32768*16
-#define W_scale 32768*2000
-//#define G_scale 1
-//#define W_scale 1
+#include"getSensorData.h"
 
 static int dataFlow = 0;
 static short data8bit = 0;
