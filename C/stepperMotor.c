@@ -48,7 +48,6 @@
 static int delay_g = 0;
 static int beat_g = 8;
 static int direction_g = 0;
-static int count = 0;
 static struct Motor {
 	int direction;
 	int speed;
@@ -1051,8 +1050,8 @@ void baseRunClockwise(int delayus, int beat) {
 
 
 
-	void *thread1() {
-		
+	void *thread1() {		
+		int count = 0;
 		switch (direction_g) {
 			case 2:
 				while (true) {
@@ -1082,7 +1081,7 @@ void baseRunClockwise(int delayus, int beat) {
 	}
 
 	void *thread2() {
-		
+		int count = 0;	
 		switch (direction_g) {
 			case 2:
 				while (true) {
@@ -1113,7 +1112,7 @@ void baseRunClockwise(int delayus, int beat) {
 
 
 	void *thread3() {
-		
+		int count = 0;	
 		switch (direction_g) {
 			case 2:
 				while (true) {
