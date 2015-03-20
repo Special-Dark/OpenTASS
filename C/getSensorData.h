@@ -22,3 +22,11 @@
 //#define G_scale 1
 //#define W_scale 1
 
+short readSensorData();
+int openSerialPort(char *device, int baud);
+void decodeDataTo16Bit(short data);
+void showFakeGUI();
+void handleDataScale();
+void handleDataScaleWithDebug();
+
+
