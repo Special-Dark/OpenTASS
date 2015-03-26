@@ -1,5 +1,5 @@
-LIBS = -lwiringPi
-OBJS = getSensorData.o
+LIBS = -lwiringPi -lpthread
+OBJS = getSensorData.o stepperMotor.o
 CFLAGS = -Wall
 main: ${OBJS}
 	gcc -o getSensorData ${OBJS} ${LIBS}

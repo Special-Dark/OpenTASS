@@ -983,18 +983,10 @@ void baseRunClockwise(int delayus, int beat) {
 
 
 	void *thread1() {		
-		int count = 0;
 		switch (direction_g) {
 			case DIRECTION_N:
 				while (true) {
-					for (count=1;count<=COUNT;count++) {
-						motor_1_StepParam(DIRECTION_N, delay_g, beat_g);	
-					}
-					delayMicroseconds(5000);
-					for (count=COUNT;count>=1;count--) {
-						motor_1_StepParam(DIRECTION_P, delay_g, beat_g);	
-					}
-					delayMicroseconds(5000);
+					motor_1_StepParam(DIRECTION_N, delay_g, beat_g);	
 				}
 				break;
 			case DIRECTION_P:
@@ -1002,24 +994,14 @@ void baseRunClockwise(int delayus, int beat) {
 					motor_1_StepParam(DIRECTION_P, delay_g, beat_g);	
 				}
 				break;
-			default:
-				return;
 		}
 	}
 
 	void *thread2() {
-		int count = 0;	
 		switch (direction_g) {
 			case DIRECTION_N:
 				while (true) {
-					for (count=1;count<=COUNT;count++) {
-						motor_2_StepParam(DIRECTION_N, delay_g, beat_g);	
-					}
-					delayMicroseconds(5000);
-					for (count=COUNT;count>=1;count--) {
-						motor_2_StepParam(DIRECTION_P, delay_g, beat_g);	
-					}
-					delayMicroseconds(5000);
+					motor_2_StepParam(DIRECTION_N, delay_g, beat_g);	
 				}
 				break;
 			case DIRECTION_P:
@@ -1027,34 +1009,22 @@ void baseRunClockwise(int delayus, int beat) {
 					motor_2_StepParam(DIRECTION_P, delay_g, beat_g);	
 				}
 				break;
-			default:
-				return;
 		}
 	}
 
 
 	void *thread3() {
-		int count = 0;	
 		switch (direction_g) {
 			case DIRECTION_N:
  				while (true) {
- 					for (count=1;count<=COUNT;count++) {
-						motor_3_StepParam(DIRECTION_N, delay_g, beat_g);	
-					}
-					delayMicroseconds(5000);
-					for (count=COUNT;count>=1;count--) {
-						motor_3_StepParam(DIRECTION_P, delay_g, beat_g);	
-					}
-					delayMicroseconds(5000);
+					motor_3_StepParam(DIRECTION_N, delay_g, beat_g);	
 				}
 				break;
 			case DIRECTION_P:
 				while (true) {
-						motor_3_StepParam(DIRECTION_P, delay_g, beat_g);	
+					motor_3_StepParam(DIRECTION_P, delay_g, beat_g);	
 				}
 				break;
-			default:
-				return;
 		}
 	}
 
@@ -1082,16 +1052,16 @@ void baseRunClockwise(int delayus, int beat) {
 
 
 
-void main(int argc, char *argv[]) {
+void startMotor(int delayus, int direction, int beat) {
 
-	delay_g = atoi(argv[1]);
-	beat_g = atoi(argv[3]);
+	delay_g = delayus;
+	beat_g = beat;
 	initalPins();
 
 
-    if (strcmp(argv[2],"p")==0) {
+    if (direction == 0) {
 		direction_g = 0;
-	} else if (strcmp(argv[2],"n")==0) {
+	} else if (direction==1) {
 		direction_g = 1;
 	} else
 		direction_g = 0;
@@ -1100,32 +1070,5 @@ void main(int argc, char *argv[]) {
 
 }
 
-/*	switch (direction) {
-		case 2:
-			while (true) {
-				for (count=1;count<=COUNT;count++) {
-					
-				}
-				delayMicroseconds(5000);
-				for (count=COUNT;count>=1;count--) {
-					
-				}
-				delayMicroseconds(5000);
-			}
-			break;
-		case 1:
-			while (true) {
-				baseRunAnticlockwise(delay, beat);
-			}
-			break;
-		case 0:
-			while (true) {
-				baseRunClockwise(delay, beat);
-			}
-			break;
-		default:
-			return;
-	}
-*/
 
 

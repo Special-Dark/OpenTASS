@@ -7,7 +7,7 @@
 
 
 #include"getSensorData.h"
-
+#include"stepperMotor.h"
 static int dataFlow = 0;
 static short data8bit = 0;
 static short dataBuffer[88];
@@ -17,14 +17,40 @@ static short Wdata[3] = {0};
 static float G_Output[3] = {0};
 static float W_Output[3] = {0};
 
+pthread_t sensorThread;
 void signalHandler(int sig) {
 	printf("\033[?25h"); // set cursor show 
 	printf("\nexit!\n");
 	exit(0);
 }
 
+void *sensorT() {
+	handleDataScaleWithDebug();
+}
+
+void createSensorThread() {
+	int temp;
+	memset(&sensorThread, 0, sizeof(sensorThread));
+	if((temp = pthread_create(&sensorThread, NULL, sensorT, NULL))!=0)
+		printf("failed to create sensor thread\n");
+	else
+		printf("create sensor thread done\n");
+
+//	pthread_join(sensorThread, NULL);
+}
+
 int main(int argc, char *argv[]) {
 	int mode = 0;
+	int delayus = atoi(argv[2]);
+	int direction = 0;
+	int beat = atoi(argv[4]);
+
+	if (strcmp(argv[3],"p")==0) {
+		direction = 0;
+	} else if (strcmp(argv[3],"n")==0) {
+		direction = 1;
+	} else 
+		direction = 0;
 
 	printf("Start runing...\n");
 	signal(SIGINT,signalHandler);
@@ -37,10 +63,15 @@ int main(int argc, char *argv[]) {
 
 	switch (mode) {
 		case 0 : 
-			  handleDataScale();
+			  //handleDataScale();
+			  createSensorThread();
+			  startMotor(delayus,direction,beat);
+				
 			  break;
 		case 1 :
-			  handleDataScaleWithDebug();
+			 // handleDataScaleWithDebug();
+			  createSensorThread();
+			  startMotor(delayus,direction,beat);
 			  break;
 		default : 
 			  return -1;

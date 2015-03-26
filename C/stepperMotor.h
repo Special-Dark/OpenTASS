@@ -35,8 +35,8 @@
 #define MOTOR_2 2
 #define MOTOR_3 3
 
-#define DIRECTION_N 0
-#define DIRECTION_P 1
+#define DIRECTION_N 1
+#define DIRECTION_P 0
 
 #define BEAT_4 4
 #define BEAT_8 8
@@ -51,4 +51,5 @@ void *thread1();
 void *thread2();
 void *thread3();
 void thread_create();
+void startMotor(int delayus, int direction, int beat);
 
