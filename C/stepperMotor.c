@@ -6,11 +6,12 @@
  ************************************************************************/
 
 #include"stepperMotor.h"
-
+#include"getSensorData.h"
 static int delay_g = 0;
 static int beat_g = 8;
 static int direction_g = 0;
-
+static float DEVIATION = 0.06;
+static float DEVIATION_N = -0.06;
 pthread_t motor_thread[3];
 
 void initalPins() {
@@ -979,11 +980,34 @@ void baseRunClockwise(int delayus, int beat) {
 //	}
 }
 
+void releaseMotor_1() {
+	
+		digitalWrite(IN0_1, LOW);
+		digitalWrite(IN1_1, LOW);
+		digitalWrite(IN2_1, LOW);
+		digitalWrite(IN3_1, LOW);
+		delayMicroseconds(500);
+}
 
-
+void releaseMotor_2() {
+	
+		digitalWrite(IN0_2, LOW);
+		digitalWrite(IN1_2, LOW);
+		digitalWrite(IN2_2, LOW);
+		digitalWrite(IN3_2, LOW);
+		delayMicroseconds(500);
+}
+void releaseMotor_3() {
+	
+		digitalWrite(IN0_3, LOW);
+		digitalWrite(IN1_3, LOW);
+		digitalWrite(IN2_3, LOW);
+		digitalWrite(IN3_3, LOW);
+		delayMicroseconds(500);
+}
 
 	void *thread1() {		
-		switch (direction_g) {
+/*		switch (direction_g) {
 			case DIRECTION_N:
 				while (true) {
 					motor_1_StepParam(DIRECTION_N, delay_g, beat_g);	
@@ -995,10 +1019,23 @@ void baseRunClockwise(int delayus, int beat) {
 				}
 				break;
 		}
+*/		
+		float *data;
+		while (true) {
+			data = getG_OutputData();
+			if (data[0] != 0 && data[0] > DEVIATION) {
+					motor_1_StepParam(DIRECTION_P, delay_g, beat_g);	
+			} else if (data[0] != 0 && data[0] < DEVIATION_N) {
+					motor_1_StepParam(DIRECTION_N, delay_g, beat_g);	
+			} else if (data[0] < DEVIATION || data[0] > DEVIATION_N) {
+				releaseMotor_1();
+			}
+		}
+		
 	}
 
 	void *thread2() {
-		switch (direction_g) {
+/*		switch (direction_g) {
 			case DIRECTION_N:
 				while (true) {
 					motor_2_StepParam(DIRECTION_N, delay_g, beat_g);	
@@ -1010,11 +1047,23 @@ void baseRunClockwise(int delayus, int beat) {
 				}
 				break;
 		}
+*/
+		float *data;
+		while (true) {
+			data = getG_OutputData();
+			if (data[1] != 0 && data[1] > DEVIATION) {
+					motor_2_StepParam(DIRECTION_P, delay_g, beat_g);	
+			}else if (data[1] != 0 && data[1] < DEVIATION_N) {
+					motor_2_StepParam(DIRECTION_N, delay_g, beat_g);	
+			} else if (data[1] < DEVIATION || data[1] > DEVIATION_N) {
+				releaseMotor_2();
+			}
+		}
 	}
 
 
 	void *thread3() {
-		switch (direction_g) {
+/*		switch (direction_g) {
 			case DIRECTION_N:
  				while (true) {
 					motor_3_StepParam(DIRECTION_N, delay_g, beat_g);	
@@ -1025,6 +1074,16 @@ void baseRunClockwise(int delayus, int beat) {
 					motor_3_StepParam(DIRECTION_P, delay_g, beat_g);	
 				}
 				break;
+		}
+		*/
+		float *data;
+		while (true) {
+			data = getG_OutputData();
+			if (data[2] != 0 && data[2] < DEVIATION_N) {
+					motor_3_StepParam(DIRECTION_N, delay_g, beat_g);	
+			}else if (data[2] > DEVIATION_N) {
+				releaseMotor_3();
+			}
 		}
 	}
 

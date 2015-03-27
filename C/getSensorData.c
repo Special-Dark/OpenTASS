@@ -39,6 +39,10 @@ void createSensorThread() {
 //	pthread_join(sensorThread, NULL);
 }
 
+float *getG_OutputData() {
+	return G_Output;
+}
+
 int main(int argc, char *argv[]) {
 	int mode = 0;
 	int delayus = atoi(argv[2]);
@@ -88,7 +92,7 @@ void handleDataScale() {
 		
 		G_Output[0] = (float) Gdata[0] / G_scale;
 		G_Output[1] = (float) Gdata[1] / G_scale;
-		G_Output[2] = (float) Gdata[2] / G_scale;
+		G_Output[2] = (float) (Gdata[2] / G_scale);
 
 		W_Output[0] = (float) Wdata[0] / W_scale;
 		W_Output[1] = (float) Wdata[1] / W_scale;

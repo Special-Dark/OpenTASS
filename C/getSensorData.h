@@ -28,5 +28,5 @@ void decodeDataTo16Bit(short data);
 void showFakeGUI();
 void handleDataScale();
 void handleDataScaleWithDebug();
-
+float *getG_OutputData();
 
